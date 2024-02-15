@@ -26,8 +26,12 @@ void loop() {
   
 
   //Print Potentiometer Vvalue
-  Serial.println("Pot: " + pot);
-  Serial.println("Percent: " + percent);
+  Serial.print("Pot: ");
+  Serial.print(pot);
+  Serial.println(" ");
+  Serial.print("Percent: ");
+  Serial.print(percent);
+  Serial.println(" ");
 
   delay(1);  //Delay in between reads for stability
 }
