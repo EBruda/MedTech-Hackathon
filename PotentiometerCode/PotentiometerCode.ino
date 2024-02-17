@@ -3,6 +3,15 @@
 char letters[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 String letters2[26] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
+int a=7; 
+int b=6; 
+int c=5; 
+int d=11; 
+int e=10; 
+int f=8; 
+int g=9; 
+int dp=4; 
+
 //The setup routine runs once when you press reset
   //Define a tolerance +- a percent
   int tolerance = 5;
@@ -43,8 +52,120 @@ String letters2[26] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L
   int32_t   *pottwo =           (int32_t*)cp["PotTwo"];
   //for csv: A = 1, B = 2,....Z = 26
 
+  void display1(void) {
+    digitalWrite(b,HIGH);
+    digitalWrite(c,HIGH);
+  } 
+
+  void display2(void) {
+    digitalWrite(a,HIGH);
+    digitalWrite(b,HIGH);
+
+    digitalWrite(g,HIGH);
+    digitalWrite(e,HIGH);
+    digitalWrite(d,HIGH);
+  }
+    
+  void display3(void) { 
+    digitalWrite(a,HIGH);
+
+    digitalWrite(b,HIGH);
+      
+    digitalWrite(c,HIGH);
+    digitalWrite(d,HIGH);
+
+    digitalWrite(g,HIGH);
+  } 
+
+  void display4(void) {
+    
+    digitalWrite(f,HIGH);
+    digitalWrite(b,HIGH);
+    digitalWrite(g,HIGH);
+
+    digitalWrite(c,HIGH);
+  } 
+
+  void display5(void) { 
+    digitalWrite(a,HIGH);
+    digitalWrite(f,HIGH);
+    digitalWrite(g,HIGH);
+
+    digitalWrite(c,HIGH);
+    digitalWrite(d,HIGH);
+  } 
+
+  void display6(void) { 
+    digitalWrite(a,HIGH);
+    digitalWrite(f,HIGH);
+
+    digitalWrite(g,HIGH);
+    digitalWrite(c,HIGH);
+    digitalWrite(d,HIGH);
+
+    digitalWrite(e,HIGH);  
+  } 
+
+  void display7(void) {   
+    digitalWrite(a,HIGH);
+    digitalWrite(b,HIGH);
+    digitalWrite(c,HIGH);
+  }
+    
+
+  void display8(void) { 
+    digitalWrite(a,HIGH);
+
+    digitalWrite(b,HIGH);
+    digitalWrite(g,HIGH);
+    digitalWrite(c,HIGH);
+
+    digitalWrite(d,HIGH);  
+    digitalWrite(e,HIGH);  
+    digitalWrite(f,HIGH);
+    
+  } 
+
+  void display9(void) { 
+    digitalWrite(a,HIGH);
+    digitalWrite(b,HIGH);
+    digitalWrite(g,HIGH);
+
+    digitalWrite(c,HIGH);
+    digitalWrite(d,HIGH);  
+    digitalWrite(f,HIGH);
+    
+  } 
+
+  void display0(void) { 
+    digitalWrite(a,HIGH);
+    digitalWrite(b,HIGH);
+
+    digitalWrite(c,HIGH);
+    digitalWrite(d,HIGH);  
+    digitalWrite(e,HIGH);
+    
+    digitalWrite(f,HIGH);  
+  } 
+
+
+
+  void clearDisplay(void) { 
+    digitalWrite(a,LOW);
+    digitalWrite(b,LOW);
+
+    digitalWrite(g,LOW);
+    digitalWrite(c,LOW);
+    digitalWrite(d,LOW);  
+
+    digitalWrite(e,LOW);  
+    digitalWrite(f,LOW);  
+  } 
 void setup() {
   Serial.begin(9600);
+  int i;
+  for(i=4;i<=11;i++)
+    pinMode(i,OUTPUT);
 
 
   //for csv: A = 1, B = 2,....Z = 26
@@ -100,29 +221,71 @@ void loop() {
     // PD: (abs(Exp - Tru)) / ((Exp + Tru)/ 2) * 100
     //closeness formula - they want a higher number
     int d1 = max( abs(1023-pot1_ground_truth), abs(pot1_ground_truth - 0));
-    double pot1_percent_error = abs(d1-abs(pot1_ground_truth - pot1)) / (double)d1;
-
+    double pot1_percent_error = (abs(d1-abs(pot1_ground_truth - pot1)) / (double)d1) * 10;
+    int pot1_close_int = round(pot1_percent_error);
+    Serial.println(pot1_close_int);
 
     int d2 = max( abs(1023-pot2_ground_truth), abs(pot2_ground_truth - 0));
-    double pot2_percent_error = abs(d2-abs(pot2_ground_truth - pot2)) / (double)d2;
-    
+    double pot2_percent_error = (abs(d2-abs(pot2_ground_truth - pot2)) / (double)d2) * 10;
+    int pot2_close_int = round(pot2_percent_error);
+    Serial.println(pot2_close_int);
+    // int pot2_num_int = (int) pot1_num;
+
+    // Serial.println(pot2_num);
+
 
     // Print Potentiometer Vvalue
     Serial.print("Pot1: ");
     Serial.print(pot1);
     Serial.println(" ");
     Serial.print("Percent1: ");
-    Serial.print(pot1_percent_error);
+    Serial.print(pot1_close_int);
     Serial.println(" ");
 
     Serial.print("Pot2: ");
     Serial.print(pot2);
     Serial.println(" ");
     Serial.print("Percent2: ");
-    Serial.print(pot2_percent_error);
+    Serial.print(pot2_close_int);
     Serial.println(" ");
 
-    // delay(500);  //Delay in between reads for stability
+    switch (pot2_close_int) {
+      case 0:
+        display0();
+        break;
+      case 1:
+        display1();
+        break;
+      case 2:
+        display2();
+        break;
+      case 3:
+        display3();
+        break;
+      case 4:
+        display4();
+        break;
+      case 5:
+        display5();
+        break;
+      case 6:
+        display6();
+        break;
+      case 7:
+        display7();
+        break;
+      case 8:
+        display8();
+        break;
+      case 9:
+        display9();
+        break;
+    }
   }
+    // delay(500);  //Delay in between reads for stability
+  
+
+
 }
+
   
