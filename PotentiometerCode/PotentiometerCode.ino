@@ -2,7 +2,8 @@
 #include <CSV_Parser.h>
 char letters[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 String letters2[26] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-
+//A: D2
+//B: D3
 int a=7; 
 int b=6; 
 int c=5; 
@@ -12,7 +13,11 @@ int f=8;
 int g=9; 
 int dp=4; 
 
-//The setup routine runs once when you press reset
+int red = 1;
+int blue = 2;
+
+
+  //The setup routine runs once when you press reset
   //Define a tolerance +- a percent
   int tolerance = 5;
   
@@ -168,7 +173,9 @@ void setup() {
     pinMode(i,OUTPUT);
   }
 
-  pinMode(LED_BUILTIN, OUTPUT);
+  //led code:
+  pinMode(red, OUTPUT);
+  pinMode(blue, OUTPUT);
 
 
   //for csv: A = 1, B = 2,....Z = 26
@@ -285,9 +292,14 @@ void loop() {
         break;
     }
     //LED code:
-    digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
+    digitalWrite(red, HIGH);  // turn the LED on (HIGH is the voltage level)
     delay(1000);                      // wait for a second
-    digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
+    digitalWrite(red, LOW);   // turn the LED off by making the voltage LOW
+    delay(1000);                      // wait for a second
+
+    digitalWrite(blue, HIGH);  // turn the LED on (HIGH is the voltage level)
+    delay(1000);                      // wait for a second
+    digitalWrite(blue, LOW);   // turn the LED off by making the voltage LOW
     delay(1000);                      // wait for a second
   }
     // delay(500);  //Delay in between reads for stability
