@@ -19,7 +19,7 @@ void loop() {
   int pot = analogRead(A0);
 
   //Make a percent reading off min and max values
-  double percent = pot / (max - min) * 100;
+  double percent = (double)pot / (max - min) * 100;
 
 
 
@@ -33,5 +33,5 @@ void loop() {
   Serial.print(percent);
   Serial.println(" ");
 
-  delay(1);  //Delay in between reads for stability
+  delay(30);  //Delay in between reads for stability
 }
