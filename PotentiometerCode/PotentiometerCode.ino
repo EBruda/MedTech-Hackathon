@@ -1,6 +1,7 @@
 
 #include <CSV_Parser.h>
 char letters[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+String letters2[26] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
 //The setup routine runs once when you press reset
   //Define a tolerance +- a percent
@@ -63,12 +64,20 @@ void loop() {
   
 
   if(Serial.available() > 0)  {
-    char incomingData= Serial.read(); // can be -1 if read error
 
+    
+    char incomingData= (char)Serial.read(); // can be -1 if read error
+    // Serial.println(incomingLetter);
+    int letter_index = 0;
+    for (int i=0; i<26; i++) {  
+      // Serial.println(incomingData.c_str()[0]);
+      // Serial.println(letters2[i].c_str())[0];
 
-    int letter_index;
-    for (int i=0; i<26; i++) {
-      if (incomingData = letters[i]) {
+      if (incomingData == letters[i]) {
+        //Serial.println(incomingLetter);
+        Serial.println(letters[i]);
+        Serial.println("Letter index: ");
+        Serial.println(i);
         letter_index = i;
         break;
       }
@@ -80,24 +89,23 @@ void loop() {
     //go from percentage to what letter you are doing
     //Read from analog pin 0
     //Value should range from 0-1023
-    int pot1 = analogRead(A1);
-    int pot2 = analogRead(A2);
-    int pot1_ground_truth = potone[letter_index + 1];
-    int pot2_ground_truth = pottwo[letter_index + 1];
-    
+    int32_t pot1 = 1000;
+    int32_t pot2 = analogRead(A2);
+    int32_t pot1_ground_truth = potone[letter_index + 1];
+    int32_t pot2_ground_truth = pottwo[letter_index + 1];
+    Serial.println(pot1_ground_truth);
+    Serial.println(pot2_ground_truth);
     //make a double for integer division error reasons
     // (Exp - Tru) / Tru
-    double pot1_percent_error_numerator = (double) (pot1 - pot1_ground_truth);
-    double pot1_percent_error = (pot1_percent_error_numerator / pot1_ground_truth) * (100);
+    // PD: (abs(Exp - Tru)) / ((Exp + Tru)/ 2) * 100
+    //closeness formula - they want a higher number
+    int d1 = max( abs(1023-pot1_ground_truth), abs(pot1_ground_truth - 0));
+    double pot1_percent_error = abs(d1-abs(pot1_ground_truth - pot1)) / (double)d1;
 
-    double pot2_percent_error_numerator = (double) (pot2 - pot2_ground_truth);
-    double pot2_percent_error = (pot2_percent_error_numerator / pot2_ground_truth) * (100);
 
-
-    // //Make a percent reading off min and max values
-    // double percent1 = (double)pot1 / (max - min) * 100;
-    // double percent2 = (double)pot2 / (max - min) * 100;
-
+    int d2 = max( abs(1023-pot2_ground_truth), abs(pot2_ground_truth - 0));
+    double pot2_percent_error = abs(d2-abs(pot2_ground_truth - pot2)) / (double)d2;
+    
 
     // Print Potentiometer Vvalue
     Serial.print("Pot1: ");
@@ -114,7 +122,7 @@ void loop() {
     Serial.print(pot2_percent_error);
     Serial.println(" ");
 
-    delay(500);  //Delay in between reads for stability
+    // delay(500);  //Delay in between reads for stability
   }
 }
   
