@@ -164,8 +164,11 @@ int dp=4;
 void setup() {
   Serial.begin(9600);
   int i;
-  for(i=4;i<=11;i++)
+  for(i=4;i<=11;i++) {
     pinMode(i,OUTPUT);
+  }
+
+  pinMode(LED_BUILTIN, OUTPUT);
 
 
   //for csv: A = 1, B = 2,....Z = 26
@@ -281,6 +284,11 @@ void loop() {
         display9();
         break;
     }
+    //LED code:
+    digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
+    delay(1000);                      // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
+    delay(1000);                      // wait for a second
   }
     // delay(500);  //Delay in between reads for stability
   
