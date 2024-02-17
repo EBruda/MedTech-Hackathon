@@ -13,7 +13,7 @@ int f=8;
 int g=9; 
 int dp=4; 
 
-int red = 1;
+int red = 3;
 int blue = 2;
 
 
