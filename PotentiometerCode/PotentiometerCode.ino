@@ -212,19 +212,18 @@ void loop() {
     Serial.print("Pot1: ");
     Serial.print(pot1);
     Serial.println(" ");
-    // Serial.print("Percent1: ");
-    // Serial.print(pot1_close_int);
+    Serial.print("Percent1: ");
+    Serial.print(pot1_percent_error * 10);
     Serial.println(" ");
 
     Serial.print("Pot2: ");
     Serial.print(pot2);
     Serial.println(" ");
-    // Serial.print("Percent2: ");
-    // Serial.print(pot2_close_int);
+    Serial.print("Percent2: ");
+    Serial.print(pot2_percent_error * 10);
     Serial.println(" ");
-
     //displays the closeness number on the display
-    switch (pot2_close_int) {
+    switch (pot1_close_int) {
       case 0:
         display0();
         break;
